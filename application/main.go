@@ -1,32 +1,42 @@
 package main
 
 import (
-	"abroad/application/models"
-	"encoding/json"
+	"context"
 	"fmt"
 	"log"
 	"net/http"
+	"time"
 )
+
+//Related to error "should not use basic type string as key in context.WithValue"
+type contextKey string
+
+var userContextKey contextKey = "user"
+var requestIDKey contextKey = "requestID"
 
 func main() {
 	server := NewServer()
-	server.AddMiddleware(func(f http.HandlerFunc) http.HandlerFunc {
-		return func(w http.ResponseWriter, r *http.Request) {
-			fmt.Println("Middleware Executando", r.URL)
-			f(w, r)
-		}
-	})
+	server.UseMiddleware(traceRequest)
 
 	server.GET("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Println("Get principal")
-		ag := models.AgencyResponse{
-			Name: "José",
-		}
-		agJSON, _ := json.Marshal(ag)
-		fmt.Fprintf(w, "Hello, %s", agJSON)
+		fmt.Println("/", r.Context().Value(requestIDKey))
+		fmt.Fprintf(w, "essa eh do server default")
 	})
 
-	server.GET("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {})
+	router := NewRouter()
+	router.GET("/a", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("/a", r.Context().Value(requestIDKey))
+		fmt.Fprintf(w, "essa eh do router")
+	})
+
+	server.UseRouter(router)
 
 	log.Fatal(server.Listen(":8080"))
+}
+
+func traceRequest(f http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		context := context.WithValue(r.Context(), requestIDKey, time.Now().String())
+		f(w, r.WithContext(context))
+	}
 }
