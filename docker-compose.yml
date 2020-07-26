@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  database:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "adm123"
+      PGDATA: /tmp
+    ports:
+      - "5432:5432"
+    volumes:
+      - /var/lib/postgresql/data
+    networks:
+      - database-network
+
+  admin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "postgres@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "adm123"
+    ports:
+      - "16543:80"
+    depends_on:
+      - database
+    networks:
+      - database-network
+
+networks:
+  database-network:
+    driver: bridge
