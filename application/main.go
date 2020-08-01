@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 	"time"
+
+	appserver "github.com/go-foward/abroad/application/server"
 )
 
 //Related to error "should not use basic type string as key in context.WithValue"
@@ -15,7 +17,7 @@ var userContextKey contextKey = "user"
 var requestIDKey contextKey = "requestID"
 
 func main() {
-	server := NewServer()
+	server := appserver.NewServer()
 	server.UseMiddleware(traceRequest)
 
 	server.GET("/", func(w http.ResponseWriter, r *http.Request) {
@@ -23,7 +25,7 @@ func main() {
 		fmt.Fprintf(w, "essa eh do server default")
 	})
 
-	router := NewRouter()
+	router := appserver.NewRouter()
 	router.GET("/a", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("/a", r.Context().Value(requestIDKey))
 		fmt.Fprintf(w, "essa eh do router")
@@ -34,9 +36,9 @@ func main() {
 	log.Fatal(server.Listen(":8080"))
 }
 
-func traceRequest(f http.HandlerFunc) http.HandlerFunc {
+func traceRequest(next http.HandlerFunc) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		context := context.WithValue(r.Context(), requestIDKey, time.Now().String())
-		f(w, r.WithContext(context))
+		next(w, r.WithContext(context))
 	}
 }

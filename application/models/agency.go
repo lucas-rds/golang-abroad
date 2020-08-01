@@ -1,7 +1,7 @@
 package models
 
 import (
-	"abroad/domain/agency/entities"
+	"github.com/go-foward/abroad/domain/agency/entities"
 )
 
 // AgencyRequest model

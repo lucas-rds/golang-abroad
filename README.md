@@ -1,1 +1,1 @@
-![alt text](https://github.com/go-foward/abroad-api/blob/master/MindMap.png)
+![alt text](https://github.com/go-foward/abroad/blob/master/MindMap.png)

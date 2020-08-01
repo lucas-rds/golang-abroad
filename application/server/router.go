@@ -1,8 +1,9 @@
-package main
+package server
 
 import (
-	"abroad/utils/compare"
 	"net/http"
+
+	"github.com/go-foward/abroad/utils/compare"
 )
 
 // Router is an collection of Routes
