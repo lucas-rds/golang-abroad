@@ -1,8 +1,8 @@
 
 DIR := ${CURDIR}
 
-LIQUIBASE_CONFIGS := --defaultsFile=${DIR}/infra/liquibase/liquibase.properties
-RUN_LIQUIBASE := echo ${LIQUIBASE_CONFIGS}
+LIQUIBASE_CONFIGS := --defaultsFile=/infra/liquibase/liquibase.properties
+RUN_LIQUIBASE := docker build -t liquibase ./liquibase && docker run --network host liquibase
 
 _migrate:
 	${RUN_LIQUIBASE} update
@@ -12,11 +12,9 @@ tag:
 
 migrate: _migrate tag
 
+# example: make rollback tag="2000-01-01 18:56:57.668819"
 rollback:
-	${RUN_LIQUIBASE} rollback
+	${RUN_LIQUIBASE} rollback $(tag)
 
-test:
-	echo
-
-dangerously-exclude-all-migrations:
+dangerouslyRollback:
 	${RUN_LIQUIBASE} rollback rollbackToDate 2000-01-01 18:56:57.668819

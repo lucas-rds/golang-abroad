@@ -25,7 +25,7 @@ services:
       - database
     networks:
       - database-network
-
+      
 networks:
   database-network:
     driver: bridge
