@@ -2,7 +2,7 @@ package usecases
 
 import (
 	"github.com/go-foward/abroad/domain/agency/entities"
-	"github.com/go-foward/abroad/domain/repository"
+	"github.com/go-foward/abroad/domain/agency/repository"
 )
 
 type AgencyUseCases interface {

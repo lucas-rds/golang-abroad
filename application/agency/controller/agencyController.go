@@ -3,8 +3,8 @@ package controller
 import (
 	"github.com/go-foward/abroad/application/agency/models"
 	"github.com/go-foward/abroad/domain/agency/entities"
+	"github.com/go-foward/abroad/domain/agency/repository"
 	"github.com/go-foward/abroad/domain/agency/usecases"
-	"github.com/go-foward/abroad/domain/repository"
 )
 
 type AgencyControl interface {

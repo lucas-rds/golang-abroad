@@ -17,7 +17,7 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	agencyRepository := repository.NewDatabaseAgencyRepository(db)
+	agencyRepository := repository.NewAgencyDatabaseRepository(db)
 	agencyUseCases := usecases.NewAgencyUseCase(agencyRepository)
 	agencyController := controller.NewAgencyController(agencyRepository, agencyUseCases)
 
