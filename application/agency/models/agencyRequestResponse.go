@@ -14,15 +14,15 @@ type AgencyResponse struct {
 	Name string `json:"name"`
 }
 
-//ToDomain ...
-func ToDomain(agencyRequest *AgencyRequest) *entities.Agency {
+// AgencyRequestToDomain parses request to be used in domain
+func AgencyRequestToDomain(agencyRequest *AgencyRequest) *entities.Agency {
 	return &entities.Agency{
 		Name: agencyRequest.Name,
 	}
 }
 
-//FromDomain ...
-func FromDomain(agency *entities.Agency) *AgencyResponse {
+// AgencyResponseFromDomain parses domain into a request
+func AgencyResponseFromDomain(agency *entities.Agency) *AgencyResponse {
 	return &AgencyResponse{
 		Name: agency.Name,
 	}
