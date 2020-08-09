@@ -1,9 +1,11 @@
 package api
 
 import (
+	"log"
 	"net/http"
 	"strconv"
 
+	"github.com/go-foward/abroad/application/agency/models"
 	"github.com/labstack/echo"
 )
 
@@ -15,15 +17,30 @@ func (api API) enableAgencyHandlers() {
 }
 
 func (api API) filterAgency(c echo.Context) error {
-	return c.String(http.StatusOK, c.Get("requestID").(string))
-
+	return c.String(http.StatusOK, "")
 }
 
 func (api API) getAgency(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
-	return c.JSON(http.StatusOK, api.AgencyController.GetAgency(id))
+	agency, err := api.AgencyController.GetAgency(id)
+	if err != nil {
+		log.Println(err)
+	}
+	return c.JSON(http.StatusOK, agency)
 }
 
 func (api API) postAgency(c echo.Context) error {
-	return c.String(http.StatusOK, "POST Agency")
+	agencyRequestModel := new(models.AgencyRequest)
+
+	err := c.Bind(agencyRequestModel)
+	if err != nil {
+		return err
+	}
+
+	createdAgency, err := api.AgencyController.CreateNewAgency(agencyRequestModel)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusCreated, createdAgency)
 }

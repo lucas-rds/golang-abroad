@@ -2,14 +2,13 @@ package controller
 
 import (
 	"github.com/go-foward/abroad/application/agency/models"
-	"github.com/go-foward/abroad/domain/agency/entities"
 	"github.com/go-foward/abroad/domain/agency/repository"
 	"github.com/go-foward/abroad/domain/agency/usecases"
 )
 
 type AgencyControl interface {
-	CreateNewAgency(agency entities.Agency)
-	GetAgency(id int) *models.AgencyResponse
+	CreateNewAgency(*models.AgencyRequest) (*models.AgencyResponse, error)
+	GetAgency(id int) (*models.AgencyResponse, error)
 }
 
 type AgencyController struct {
@@ -27,11 +26,13 @@ func NewAgencyController(
 	}
 }
 
-func (controller AgencyController) CreateNewAgency(agency entities.Agency) {
-	controller.agencyUseCase.CreateAgency(agency)
+func (controller AgencyController) CreateNewAgency(agency *models.AgencyRequest) (*models.AgencyResponse, error) {
+	domainAgency := models.AgencyRequestToDomain(agency)
+	createdAgency, err := controller.agencyUseCase.CreateAgency(domainAgency)
+	return models.AgencyResponseFromDomain(createdAgency), err
 }
 
-func (controller AgencyController) GetAgency(id int) *models.AgencyResponse {
-	agency := controller.agencyUseCase.GetAgencyById(id)
-	return models.AgencyResponseFromDomain(agency)
+func (controller AgencyController) GetAgency(id int) (*models.AgencyResponse, error) {
+	agency, err := controller.agencyUseCase.GetAgencyById(id)
+	return models.AgencyResponseFromDomain(agency), err
 }

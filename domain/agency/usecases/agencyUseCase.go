@@ -6,8 +6,8 @@ import (
 )
 
 type AgencyUseCases interface {
-	CreateAgency(agency entities.Agency)
-	GetAgencyById(id int) *entities.Agency
+	CreateAgency(agency *entities.Agency) (*entities.Agency, error)
+	GetAgencyById(id int) (*entities.Agency, error)
 }
 
 type AgencyUseCase struct {
@@ -20,10 +20,10 @@ func NewAgencyUseCase(repo repository.AgencyRepository) AgencyUseCases {
 	}
 }
 
-func (usecase AgencyUseCase) CreateAgency(agency entities.Agency) {
-	usecase.agencyRepository.Save(agency)
+func (usecase AgencyUseCase) CreateAgency(agency *entities.Agency) (*entities.Agency, error) {
+	return usecase.agencyRepository.Create(*agency)
 }
 
-func (usecase AgencyUseCase) GetAgencyById(id int) *entities.Agency {
+func (usecase AgencyUseCase) GetAgencyById(id int) (*entities.Agency, error) {
 	return usecase.agencyRepository.Get(id)
 }

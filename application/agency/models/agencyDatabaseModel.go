@@ -6,7 +6,8 @@ import (
 
 // AgencyRequest model
 type AgencyDatabaseModel struct {
-	Name string
+	Id   int    `db:"id"`
+	Name string `db:"name"`
 }
 
 //ToDomain ...

@@ -4,17 +4,17 @@ import "github.com/go-foward/abroad/domain/agency/entities"
 
 // AgencyCreator interface
 type AgencyCreator interface {
-	Create(agency entities.Agency)
+	Create(agency entities.Agency) (*entities.Agency, error)
 }
 
 // AgencyEditor interface
 type AgencyEditor interface {
-	Save(agency entities.Agency)
+	Save(agency entities.Agency) (*entities.Agency, error)
 }
 
 // AgencyRetriever interface
 type AgencyRetriever interface {
-	Get(id int) *entities.Agency
+	Get(id int) (*entities.Agency, error)
 }
 
 // AgencyRepository agency interfaces composition
