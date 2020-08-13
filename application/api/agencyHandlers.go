@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/go-foward/abroad/application/agency/models"
+	"github.com/go-foward/abroad/domain/agency/usecases"
 	"github.com/labstack/echo"
 )
 
@@ -22,7 +22,11 @@ func (api API) filterAgency(c echo.Context) error {
 
 func (api API) getAgency(c echo.Context) error {
 	id, _ := strconv.Atoi(c.Param("id"))
-	agency, err := api.AgencyController.GetAgency(id)
+	request := usecases.NewGetAgencyByIdRequest(id)
+
+	usecase := usecases.NewGetAgencyByIdUseCase(api.AgencyRepository)
+	agency, err := usecase.Execute(*request)
+
 	if err != nil {
 		log.Println(err)
 	}
@@ -30,14 +34,16 @@ func (api API) getAgency(c echo.Context) error {
 }
 
 func (api API) postAgency(c echo.Context) error {
-	agencyRequestModel := new(models.AgencyRequest)
+	var createAgencyRequest usecases.CreateAgencyRequest
 
-	err := c.Bind(agencyRequestModel)
+	err := c.Bind(&createAgencyRequest)
 	if err != nil {
 		return err
 	}
 
-	createdAgency, err := api.AgencyController.CreateNewAgency(agencyRequestModel)
+	usecase := usecases.NewCreateAgencyUseCase(api.AgencyRepository)
+	createdAgency, err := usecase.Execute(createAgencyRequest)
+
 	if err != nil {
 		return err
 	}

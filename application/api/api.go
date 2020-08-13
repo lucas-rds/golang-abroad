@@ -5,21 +5,21 @@ import (
 	"io/ioutil"
 	"log"
 
-	"github.com/go-foward/abroad/application/agency/controller"
+	"github.com/go-foward/abroad/domain/agency/repository"
 	"github.com/labstack/echo"
 )
 
 // API entrypoint
 type API struct {
 	*echo.Echo
-	AgencyController controller.AgencyControl
+	AgencyRepository repository.AgencyRepository
 }
 
 // NewAPI creates a new application
-func NewAPI(agencyController controller.AgencyControl) *API {
+func NewAPI(repo repository.AgencyRepository) *API {
 	return &API{
 		Echo:             echo.New(),
-		AgencyController: agencyController,
+		AgencyRepository: repo,
 	}
 }
 

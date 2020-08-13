@@ -1,20 +1,20 @@
 package repository
 
-import "github.com/go-foward/abroad/domain/agency/entities"
+import "github.com/go-foward/abroad/domain/agency/dbmodels"
 
 // AgencyCreator interface
 type AgencyCreator interface {
-	Create(agency entities.Agency) (*entities.Agency, error)
+	Create(agency dbmodels.AgencyDatabaseModel) (*dbmodels.AgencyDatabaseModel, error)
 }
 
 // AgencyEditor interface
 type AgencyEditor interface {
-	Save(agency entities.Agency) (*entities.Agency, error)
+	Save(agency dbmodels.AgencyDatabaseModel) (*dbmodels.AgencyDatabaseModel, error)
 }
 
 // AgencyRetriever interface
 type AgencyRetriever interface {
-	Get(id int) (*entities.Agency, error)
+	Get(id int) (*dbmodels.AgencyDatabaseModel, error)
 }
 
 // AgencyRepository agency interfaces composition
