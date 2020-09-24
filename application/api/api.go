@@ -34,8 +34,8 @@ func (api API) printBanner() {
 
 // Run start http server
 func (api API) Run() {
-	api.enableMiddlewares()
-	api.enableAgencyHandlers()
+	api.middlewares()
+	api.routes()
 
 	api.printBanner()
 	log.Fatal(api.Start(":8080"))

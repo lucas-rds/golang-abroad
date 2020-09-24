@@ -1,14 +1,15 @@
 package dbmodels
 
-// AgencyRequest model
+// AgencyDatabaseModel model
 type AgencyDatabaseModel struct {
-	Id   int    `db:"id"`
+	ID   int    `db:"id"`
 	Name string `db:"name"`
 }
 
+// AgencyDatabaseModelOption type
 type AgencyDatabaseModelOption func(*AgencyDatabaseModel)
 
-//DbAgencyFromDomain ...
+// NewAgencyDatabaseModel AgencyDatabaseModel builder
 func NewAgencyDatabaseModel(name string, options ...AgencyDatabaseModelOption) *AgencyDatabaseModel {
 	model := &AgencyDatabaseModel{
 		Name: name,
@@ -19,8 +20,9 @@ func NewAgencyDatabaseModel(name string, options ...AgencyDatabaseModelOption) *
 	return model
 }
 
-func Id(id int) AgencyDatabaseModelOption {
+// AgencyID adds id into model
+func AgencyID(id int) AgencyDatabaseModelOption {
 	return func(model *AgencyDatabaseModel) {
-		model.Id = id
+		model.ID = id
 	}
 }

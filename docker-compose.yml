@@ -4,6 +4,7 @@ services:
   database:
     image: postgres
     environment:
+      POSTGRES_DB: abroad
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "adm123"
       PGDATA: /tmp

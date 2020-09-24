@@ -5,12 +5,21 @@ import (
 
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
+	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-func (api API) enableMiddlewares() {
-	api.Echo.Use(middleware.Logger())
-	api.Echo.Use(middleware.Recover())
-	api.Echo.Use(api.traceRequest)
+func (api API) middlewares() {
+	api.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Output: &lumberjack.Logger{
+			Filename:   "./output.log",
+			MaxSize:    10,
+			MaxBackups: 3,
+			MaxAge:     28,
+			Compress:   false,
+		},
+	}))
+	api.Use(middleware.Recover())
+	api.Use(api.traceRequest)
 }
 
 func (api API) traceRequest(next echo.HandlerFunc) echo.HandlerFunc {

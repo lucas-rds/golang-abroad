@@ -2,6 +2,6 @@ package entities
 
 // Agency model
 type Agency struct {
-	Id   int
+	ID   int
 	Name string
 }

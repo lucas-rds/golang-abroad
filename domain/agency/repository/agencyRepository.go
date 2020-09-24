@@ -1,6 +1,8 @@
 package repository
 
-import "github.com/go-foward/abroad/domain/agency/dbmodels"
+import (
+	"github.com/go-foward/abroad/domain/agency/dbmodels"
+)
 
 // AgencyCreator interface
 type AgencyCreator interface {
@@ -17,9 +19,15 @@ type AgencyRetriever interface {
 	Get(id int) (*dbmodels.AgencyDatabaseModel, error)
 }
 
+// AgencyFilterer interface
+type AgencyFilterer interface {
+	Filter(filter map[string][]string) ([]dbmodels.AgencyDatabaseModel, error)
+}
+
 // AgencyRepository agency interfaces composition
 type AgencyRepository interface {
 	AgencyCreator
 	AgencyEditor
 	AgencyRetriever
+	AgencyFilterer
 }
