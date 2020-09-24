@@ -10,7 +10,7 @@ import (
 	"github.com/labstack/echo"
 )
 
-func (api API) filterAgency(repo repository.AgencyRepository) echo.HandlerFunc {
+func filterAgency(repo repository.AgencyRepository) echo.HandlerFunc {
 	return func(c echo.Context) error {
 
 		request := usecases.AgencyFilterRequest{
@@ -27,7 +27,7 @@ func (api API) filterAgency(repo repository.AgencyRepository) echo.HandlerFunc {
 	}
 }
 
-func (api API) getAgency(repo repository.AgencyRepository) echo.HandlerFunc {
+func getAgency(repo repository.AgencyRepository) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		id, _ := strconv.Atoi(c.Param("id"))
 		request := usecases.AgencyGetByIDRequest{ID: id}
@@ -40,7 +40,7 @@ func (api API) getAgency(repo repository.AgencyRepository) echo.HandlerFunc {
 	}
 }
 
-func (api API) postAgency(repo repository.AgencyRepository) echo.HandlerFunc {
+func postAgency(repo repository.AgencyRepository) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		var createAgencyRequest usecases.AgencyCreateRequest
 
