@@ -10,10 +10,6 @@ import (
 	"github.com/labstack/echo"
 )
 
-type Teste struct {
-	Name string `json:"name"`
-}
-
 func (api API) filterAgency(repo repository.AgencyRepository) echo.HandlerFunc {
 	return func(c echo.Context) error {
 
