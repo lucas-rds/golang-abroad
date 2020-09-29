@@ -9,19 +9,14 @@ type AgencyGetByIDRequest struct {
 	ID int
 }
 
-// AgencyGet ...
-type AgencyGet struct {
+// AgencyRetrieved ...
+type AgencyRetrieved struct {
 	Name string `json:"name"`
 }
 
 // AgencyGetResponse ...
 type AgencyGetResponse struct {
-	Agency AgencyGet `json:"agency"`
-}
-
-// AgencyGetByIDUseCaseExecuter ...
-type AgencyGetByIDUseCaseExecuter interface {
-	Execute(request AgencyGetByIDRequest) (*AgencyGetResponse, error)
+	Agency AgencyRetrieved `json:"agency"`
 }
 
 // AgencyGetByIDUseCase ...
@@ -46,7 +41,7 @@ func (usecase AgencyGetByIDUseCase) Execute(request AgencyGetByIDRequest) (*Agen
 	}
 
 	response = &AgencyGetResponse{
-		Agency: AgencyGet{Name: agency.Name},
+		Agency: AgencyRetrieved{Name: agency.Name},
 	}
 	return response, nil
 }

@@ -10,17 +10,15 @@ type AgencyCreateRequest struct {
 	Name string
 }
 
-// AgencyCreateResponse ...
-type AgencyCreateResponse struct {
-	Agency struct {
-		ID   int
-		Name string
-	}
+// AgencyCreated ...
+type AgencyCreated struct {
+	ID   int    `json:"id"`
+	Name string `json:"name"`
 }
 
-// AgencyCreateUseCaseExecuter ...
-type AgencyCreateUseCaseExecuter interface {
-	Execute(request AgencyCreateRequest) (*AgencyCreateResponse, error)
+// AgencyCreateResponse ...
+type AgencyCreateResponse struct {
+	Agency AgencyCreated `json:"agency"`
 }
 
 // AgencyCreateUseCase ...
@@ -44,10 +42,7 @@ func (usecase AgencyCreateUseCase) Execute(request AgencyCreateRequest) (*Agency
 	}
 
 	response := &AgencyCreateResponse{
-		Agency: struct {
-			ID   int
-			Name string
-		}{
+		Agency: AgencyCreated{
 			ID:   agency.ID,
 			Name: agency.Name,
 		},

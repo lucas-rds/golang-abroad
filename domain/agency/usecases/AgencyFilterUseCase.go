@@ -20,11 +20,6 @@ type AgencyFilterResponse struct {
 	Agencies []AgencyFiltered `json:"agencies"`
 }
 
-// AgencyFilterUseCaseExecuter ...
-type AgencyFilterUseCaseExecuter interface {
-	Execute(request AgencyGetByIDRequest) (*AgencyFilterResponse, error)
-}
-
 // AgencyFilterUseCase ...
 type AgencyFilterUseCase struct {
 	agencyRepository repository.AgencyRepository
